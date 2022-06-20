@@ -1,4 +1,3 @@
-const { response } = require('express');
 const userService = require('../../services/userService');
 
 // [GET] /user/profile

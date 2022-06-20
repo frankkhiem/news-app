@@ -6,6 +6,7 @@ const jwtHelpter = require('../../helpers/jwt');
 
 const _getBasicDetailUser = (user) => {
   return {
+    userId: user._id,
     fullname: user.fullname,
     email: user.email,
     description: user.description
@@ -131,11 +132,26 @@ const checkAuth = async ({ accessToken }) => {
       throw createError(401, "accessToken is invalid");
     }
 
+    if( userByToken.blockedAt ) {
+      throw createError(403, "User account has been blocked");
+    }
+
     return {
       userId: userByToken._id
     }
   } catch (error) {
     throw createError(error.statusCode || 401, error.message || "accessToken is invalid");
+  }
+};
+
+const checkIsAdmin = async ({ userId }) => {
+  try {
+    const user = await User.findById(userId);
+
+    if( user.role === 'admin' ) return true;
+    return false;
+  } catch (error) {
+    throw createError(error.statusCode || 403, error.message || "you are not the application admin");
   }
 };
 
@@ -181,5 +197,6 @@ module.exports = {
   register,
   logout,
   checkAuth,
+  checkIsAdmin,
   refreshToken
 };

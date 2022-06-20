@@ -1,12 +1,17 @@
 const jwt = require("jsonwebtoken");
 
-const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET_KEY || 'few8ukjgwrh2@#4hof';
-const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET_KEY || 'rgihdI4902#$FsfjJfljajLJFewf34';
+const accessTokenSecret = () => {
+  return process.env.ACCESS_TOKEN_SECRET_KEY || 'few8ukjgwrh2@#4hof';
+};
+
+const refreshTokenSecret = () => {
+  return process.env.REFRESH_TOKEN_SECRET_KEY || 'rgihdI4902#$FsfjJfljajLJFewf34aGk';
+}
 
 const generateAccessToken = (data) => {
   return jwt.sign(
     data,
-    accessTokenSecret,
+    accessTokenSecret(),
     {
       expiresIn: '1d'
     }
@@ -16,7 +21,7 @@ const generateAccessToken = (data) => {
 const generateRefreshToken = (data) => {
   return jwt.sign(
     data,
-    refreshTokenSecret,
+    refreshTokenSecret(),
     {
       expiresIn: '30d'
     }
@@ -24,11 +29,11 @@ const generateRefreshToken = (data) => {
 };
 
 const verifyAccessToken = (token) => {
-  return jwt.verify(token, accessTokenSecret);
+  return jwt.verify(token, accessTokenSecret());
 };
 
 const verifyRefreshToken = (token) => {
-  return jwt.verify(token, refreshTokenSecret);
+  return jwt.verify(token, refreshTokenSecret());
 };
 
 const decodeToken = (token) => {

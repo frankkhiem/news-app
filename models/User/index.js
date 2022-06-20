@@ -7,7 +7,7 @@ const userSchema = new Schema({
     required: [true, "Full name is required"]
   },
   email: {
-    type: String, 
+    type: String,
     unique: true,
     required: [true, "Email is required"], 
     match: [/\S+@\S+/, 'Email is invalid'], 
@@ -17,9 +17,15 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Password is required"]
   },
+  role: {
+    type: String,
+    enum: ['admin', 'user'],
+    default: 'user'
+  },
   description: String,
   accessToken: String,
-  refreshToken: String
+  refreshToken: String,
+  blockedAt: Date
 },
 {
   collection: 'users',

@@ -4,6 +4,7 @@ const User = require('../../models/User');
 
 const _getBasicDetailUser = (user) => {
   return {
+    userId: user._id,
     fullname: user.fullname,
     email: user.email,
     description: user.description

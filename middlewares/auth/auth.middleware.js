@@ -5,7 +5,7 @@ const checkAuth = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
 
-    if( !authorization ) throw createError(403, "No accessToken provided");
+    if( !authorization ) throw createError(401, "No accessToken provided");
 
     const accessToken = authorization.split(" ")[1];
     const result = await authService.checkAuth({ accessToken });
@@ -18,6 +18,23 @@ const checkAuth = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  checkAuth
+const checkIsAdmin = async (req, res, next) => {
+  try {
+    const isAdmin = await authService.checkIsAdmin({ userId: req.userId });
+
+    if( isAdmin ) {
+      next();
+      return;
+    }
+
+    throw createError(403, "You are not the application admin");
+  } catch (error) {
+    res.status(error.status || 403);
+    res.json(error);
+  }
 }
+
+module.exports = {
+  checkAuth,
+  checkIsAdmin
+};

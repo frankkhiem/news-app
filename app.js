@@ -1,13 +1,13 @@
 const express = require('express');
-const dotenv = require('dotenv')
-const path = require('path')
+const dotenv = require('dotenv');
+const path = require('path');
 
 const db = require('./helpers/db');
 const router = require('./routes');
 
 
 const app = express();
-const port = 3001;
+const port = 3000;
 
 // Config .env
 dotenv.config();
