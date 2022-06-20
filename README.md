@@ -3,15 +3,15 @@
 Clone the repo and install the dependencies.
 
 ```bash
-git clone https://github.com/frankkhiem/nodejs-app_auth_api.git
-cd nodejs-app_auth_api
+git clone https://github.com/frankkhiem/news-app.git
+cd news-app
 ```
 
 ```bash
 npm install
 ``` 
 
-To start the express server, run the following  
+To start the express server, run the following
 (Run in development environment)
 
 ```bash
